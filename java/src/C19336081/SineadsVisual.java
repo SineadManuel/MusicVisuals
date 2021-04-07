@@ -28,6 +28,7 @@ public class SineadsVisual extends Visual {
         loadAudio("Wait_a_Minute!.mp3");
         
         test = new Test(this);
+        colorMode(HSB);
         // wf = new WaveForm(this);
         // abv = new AudioBandsVisual(this);
     }

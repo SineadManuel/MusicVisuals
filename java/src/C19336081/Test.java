@@ -2,42 +2,38 @@ package C19336081;
 
 import processing.core.*;
 
-// Visual that renders a sunset
+// Test Visual
 public class Test {
     SineadsVisual sv;
+    // waveform
+    float cy = 0;
 
     public Test(SineadsVisual sv)
     {
-        this.sv = sv; 
+        this.sv = sv;
+        // waveform
+        cy = this.sv.height / 2;
     }
-
-    float x = 300;
-    float y = 300;
-    float angle;
-    // float halfHeight = sv.height / 2;
 
     public void render()
     {
-        sv.translate(sv.width/2, sv.height/2);
-
-        for(float a = 0; a < 360; a += 10) {
-            sv.pushMatrix();
-            sv.rotate(PApplet.radians(a));
-            sv.stroke(255);
-            sv.strokeWeight(3);
-            sv.line(x*PApplet.sin(PApplet.radians(angle)), 0, 0, y);
-            sv.popMatrix();
+        // bar chart
+        float gap = sv.width / (float) sv.getBands().length;
+        sv.noStroke();
+        for(int i = 0 ; i < sv.getBands().length ; i ++)
+        {
+            float c = PApplet.map(i, 0, sv.getBands().length, 255, 0);
+            sv.fill(c, 255, 255);
+            sv.rect(i * gap, sv.height, gap,-sv.getSmoothedBands()[i] * 0.2f); 
         }
 
-        angle++;
+        // waveform
+        for(int i = 0 ; i < sv.getAudioBuffer().size(); i ++)
+        {
+            float c = PApplet.map(i, 0, sv.getAudioBuffer().size(), 0, 255);
+            sv.stroke(c, 255, 255);
 
-        // for (int i = 0; i < sv.getAudioBuffer().size(); i++) {
-
-        //     float c = PApplet.map(i, 0, sv.getAudioBuffer().size(), 0, 255);
-        //     sv.stroke(c, 255, 255);
-
-        //     sv.getSmoothedBands()[i] = PApplet.lerp(sv.getSmoothedBands()[i], sv.getAudioBuffer().get(i), 0.1f);        
-        //     sv.line(i, halfHeight - sv.getSmoothedBands()[i] * halfHeight * 4, i, halfHeight + sv.getSmoothedBands()[i] * halfHeight * 4);
-        // }    
+            sv.line(i, cy - sv.getAudioBuffer().get(i) * cy, i, cy + sv.getAudioBuffer().get(i) * cy);
+        }
     }
 }

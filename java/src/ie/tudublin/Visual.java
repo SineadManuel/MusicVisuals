@@ -11,7 +11,7 @@ public abstract class Visual extends PApplet
 
 	private float[] bands;
 	private float[] smoothedBands;
-
+	
 	private Minim minim;
 	private AudioInput ai;
 	private AudioPlayer ap;
@@ -22,7 +22,6 @@ public abstract class Visual extends PApplet
 	private float smothedAmplitude = 0;
 
 	
-	
 	public void startMinim() 
 	{
 		minim = new Minim(this);
@@ -31,7 +30,6 @@ public abstract class Visual extends PApplet
 
 		bands = new float[(int) log2(frameSize)];
   		smoothedBands = new float[bands.length];
-
 	}
 
 	float log2(float f) {
@@ -76,6 +74,7 @@ public abstract class Visual extends PApplet
 			average /= (float) w;
 			bands[i] = average * 5.0f;
 			smoothedBands[i] = lerp(smoothedBands[i], bands[i], 0.05f);
+			// lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f);
 		}
 	}
 
