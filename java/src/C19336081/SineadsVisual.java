@@ -5,9 +5,14 @@ import ie.tudublin.*;
 public class SineadsVisual extends Visual {
     // Make files with shapes and add them below;
     Test test;
+    SquareRight sqr;
+    SqaureLeft sql;
     // WaveForm wf;
     // AudioBandsVisual abv;
 
+    int visual = 0;
+    float[] lerpedBuffer;
+    float lerpedAverage = 0;
 
     public void settings()
     {
@@ -26,16 +31,19 @@ public class SineadsVisual extends Visual {
                 
         // Call loadAudio to load an audio file to process 
         loadAudio("Wait_a_Minute!.mp3");
-        
+
         test = new Test(this);
+        sqr = new SquareRight(this);
+        sql = new SqaureLeft(this);
         colorMode(HSB);
+        lerpedBuffer = new float[width];
         // wf = new WaveForm(this);
         // abv = new AudioBandsVisual(this);
     }
 
     public void keyPressed()
     {
-        if (key == ' ')
+        if (keyCode == ' ')
         {
             // Rewinds music
             // getAudioPlayer().cue(0);
@@ -46,6 +54,10 @@ public class SineadsVisual extends Visual {
             else {
                 getAudioPlayer().play();
             }
+        }
+
+        if (keyCode >= '0' && keyCode <= '5') {
+            visual = keyCode - '0';
         }
     }
 
@@ -66,8 +78,33 @@ public class SineadsVisual extends Visual {
 
         // Call this is you want to get the average amplitude
         calculateAverageAmplitude();   
+        
+        float average = 0;
+        float sum = 0;
 
-        test.render();
+        // Calculate the average of the buffer
+        for (int i = 0; i < getAudioBuffer().size(); i ++)
+        {
+            sum += abs(getAudioBuffer().get(i));
+        }
+        average = sum / getAudioBuffer().size();
+        // Move lerpedAverage 10% closer to average every frame
+        lerpedAverage = lerp(lerpedAverage, average, 0.1f);
+
+        switch (visual)
+        {
+            case 0:
+            {
+                sqr.render();
+                sql.render();
+                break;
+            }
+            case 1:
+            {
+                test.render();
+                break;
+            }
+        }
         // wf.render();
         // abv.render();
     }
