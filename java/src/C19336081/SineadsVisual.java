@@ -4,11 +4,8 @@ import ie.tudublin.*;
 
 public class SineadsVisual extends Visual {
     // Make files with shapes and add them below;
-    Test test;
-    SquareRight sqr;
-    SqaureLeft sql;
-    // WaveForm wf;
-    // AudioBandsVisual abv;
+    RotatingSquares rsq;
+    ExpandingCircles exc;
 
     int visual = 0;
     float[] lerpedBuffer;
@@ -16,13 +13,10 @@ public class SineadsVisual extends Visual {
 
     public void settings()
     {
-        size(800, 630, P3D);
+        // size(800, 630, P3D);
         
-        // Use this to make fullscreen
-        //fullScreen();
-
         // Use this to make fullscreen and use P3D for 3D graphics
-        //fullScreen(P3D, SPAN); 
+        fullScreen(P3D, SPAN); 
     }
 
     public void setup()
@@ -32,28 +26,28 @@ public class SineadsVisual extends Visual {
         // Call loadAudio to load an audio file to process 
         loadAudio("Wait_a_Minute!.mp3");
 
-        test = new Test(this);
-        sqr = new SquareRight(this);
-        sql = new SqaureLeft(this);
+        rsq = new RotatingSquares(this);
+        exc = new ExpandingCircles(this);
+
         colorMode(HSB);
-        lerpedBuffer = new float[width];
-        // wf = new WaveForm(this);
-        // abv = new AudioBandsVisual(this);
+        // lerpedBuffer = new float[width];
     }
 
     public void keyPressed()
     {
         if (keyCode == ' ')
         {
-            // Rewinds music
-            // getAudioPlayer().cue(0);
-
             if (getAudioPlayer().isPlaying()) {
                 getAudioPlayer().pause();
             }
             else {
                 getAudioPlayer().play();
             }
+        }
+
+        if(keyCode == LEFT) {
+            // Rewind song
+            getAudioPlayer().cue(0);
         }
 
         if (keyCode >= '0' && keyCode <= '5') {
@@ -95,13 +89,19 @@ public class SineadsVisual extends Visual {
         {
             case 0:
             {
-                sqr.render();
-                sql.render();
+                strokeWeight(4);
+                // Rotates right
+                camera(0, -500, 500, 0, 0, 0, 500, 0, 0);
+                rsq.render();
+                // Rotates left
+                camera(0, -500, 500, 0, 0, 0, -500, 0, 0);
+                rsq.render();
+                // sql.render();
                 break;
             }
             case 1:
             {
-                test.render();
+                exc.render();
                 break;
             }
         }
