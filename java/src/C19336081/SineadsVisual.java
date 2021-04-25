@@ -6,6 +6,9 @@ public class SineadsVisual extends Visual {
     // Make files with shapes and add them below;
     RotatingSquares rsq;
     ExpandingCircles exc;
+    Flower flo;
+    MoreCircles moc;
+    Dots dot;
 
     int visual = 0;
     float[] lerpedBuffer;
@@ -28,6 +31,9 @@ public class SineadsVisual extends Visual {
 
         rsq = new RotatingSquares(this);
         exc = new ExpandingCircles(this);
+        flo = new Flower(this);
+        moc = new MoreCircles(this);
+        dot = new Dots(this);
 
         colorMode(HSB);
         // lerpedBuffer = new float[width];
@@ -96,16 +102,23 @@ public class SineadsVisual extends Visual {
                 // Rotates left
                 camera(0, -500, 500, 0, 0, 0, -500, 0, 0);
                 rsq.render();
-                // sql.render();
                 break;
             }
             case 1:
             {
+                dot.render();
                 exc.render();
                 break;
             }
+            case 2:
+            {
+                flo.render();
+                break;
+            }
+            case 3:
+            {
+                moc.render();
+            }
         }
-        // wf.render();
-        // abv.render();
     }
 }
