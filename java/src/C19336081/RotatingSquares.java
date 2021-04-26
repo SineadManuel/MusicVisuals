@@ -4,7 +4,6 @@ import processing.core.*;
 
 public class RotatingSquares {
     SineadsVisual sv;
-
     float rot = 0;
 
     public RotatingSquares(SineadsVisual sv)
@@ -15,11 +14,9 @@ public class RotatingSquares {
     public void render()
     {
         sv.noFill(); 
-        // Rotates the cubes
         rot += sv.getAmplitude() / 10f;
-
-        // Rotates shapes
         sv.rotateX(rot);
+        sv.strokeWeight(4);
 
         float[] bands = sv.getSmoothedBands();
         for(int i = 0 ; i < bands.length ; i ++)

@@ -11,8 +11,10 @@ public class MoreCircles {
     }
     
     public void render() {
+        sv.noFill();
         sv.camera(0, 0, 200, 0, 0, 0, 1, 0, 0);
         sv.translate(0, 0, -200);
+        sv.strokeWeight(4);
 
         sv.ellipseMode(PApplet.CENTER);
         sv.rotate(PApplet.radians(rot));

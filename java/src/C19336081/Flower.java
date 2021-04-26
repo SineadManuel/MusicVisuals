@@ -12,9 +12,9 @@ public class Flower {
     }
     
     public void render() {
+        sv.noFill();
         sv.camera(0, 0, 200, 0, 0, 0, 1, 0, 0);
         sv.translate(0, 0, -200);
-
         sv.strokeWeight(4);
 
         sv.rotate(PApplet.radians(rot));
@@ -24,9 +24,14 @@ public class Flower {
             
             sv.stroke(colour, 255, 255);
             
-            float r = 50 * PApplet.cos(4 * i);
+            float r = 50 * PApplet.cos(6 * i);
             float x = r * PApplet.cos(i);
             float y = r * PApplet.sin(i);
+            sv.point(20 *(x * sv.lerpedAverage), 20 * (y * sv.lerpedAverage));
+
+            r = 25 * PApplet.cos(4 * i);
+            x = r * PApplet.cos(i);
+            y = r * PApplet.sin(i);
             sv.point(20 *(x * sv.lerpedAverage), 20 * (y * sv.lerpedAverage));
         }
         rot += 1;

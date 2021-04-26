@@ -9,17 +9,18 @@ public class SineadsVisual extends Visual {
     Flower flo;
     MoreCircles moc;
     Dots dot;
+    Sphere sph;
 
     int visual = 0;
     float[] lerpedBuffer;
     float lerpedAverage = 0;
+    float average;
+    float sum;
 
     public void settings()
     {
         size(800, 630, P3D);
-        
-        // Use this to make fullscreen and use P3D for 3D graphics
-        // fullScreen(P3D, SPAN); 
+        // fullScreen(P3D, SPAN);
     }
 
     public void setup()
@@ -34,9 +35,9 @@ public class SineadsVisual extends Visual {
         flo = new Flower(this);
         moc = new MoreCircles(this);
         dot = new Dots(this);
+        sph = new Sphere(this);
 
         colorMode(HSB);
-        // lerpedBuffer = new float[width];
     }
 
     public void keyPressed()
@@ -79,8 +80,8 @@ public class SineadsVisual extends Visual {
         // Call this is you want to get the average amplitude
         calculateAverageAmplitude();   
         
-        float average = 0;
-        float sum = 0;
+        average = 0;
+        sum = 0;
 
         // Calculate the average of the buffer
         for (int i = 0; i < getAudioBuffer().size(); i ++)
@@ -95,7 +96,16 @@ public class SineadsVisual extends Visual {
         {
             case 0:
             {
-                strokeWeight(4);
+                exc.render();
+                break;
+            }
+            case 1:
+            {
+                flo.render();
+                break;
+            }
+            case 2:
+            {
                 // Rotates right
                 camera(0, -500, 500, 0, 0, 0, 500, 0, 0);
                 rsq.render();
@@ -104,20 +114,31 @@ public class SineadsVisual extends Visual {
                 rsq.render();
                 break;
             }
-            case 1:
-            {
+            case 3:
+            {                
+                strokeWeight(4);
+                dot.render();
+                strokeWeight(10);
+                dot.render();
+                strokeWeight(20);
                 dot.render();
                 exc.render();
                 break;
             }
-            case 2:
+            case 4:
             {
+                sph.render();
+
+                strokeWeight(10);
+                dot.render();
+
                 flo.render();
                 break;
             }
-            case 3:
-            {
+            case 5:
+            {                
                 moc.render();
+                break;
             }
         }
     }

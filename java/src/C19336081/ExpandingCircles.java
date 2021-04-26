@@ -11,14 +11,11 @@ public class ExpandingCircles {
         this.sv = sv;
     }
 
-    public void render()
-    {
+    public void render() {
         sv.noFill();
-        // Keeps shape 2D
         sv.camera(0, 0, 200, 0, 0, 0, 1, 0, 0);
-        sv.strokeWeight(4);
-        // Centres 2D shape
         sv.translate(0, 0, 0);
+        sv.strokeWeight(4);
 
         float[] bands = sv.getSmoothedBands();
         for(int i = 0; i < bands.length; i++) {
