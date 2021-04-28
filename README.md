@@ -4,86 +4,187 @@ Name: Sinead Manuel
 
 Student Number: C19336081
 
+## Description of the assignment
+For this assignment, I was required to create "something beautiful while listening to music".
+
+The song I chose to use is "Wait A Minute!" by Willow. I wanted all my visuals to contain a rainbow colour scheme to reflect the upbeat sound of the song.
+
+I used a mix of 2D and 3D visuals in my program. I made a few of my visuals reoccur with some form of variation. For example, my first visual is of several coloured circles reacting to the music. Then in a later visual, the circles reappear but with colourful dots expanding and rotating within a circular area.
+
+I created a flower visual using the sin and cos functions. The visual is of a colourful small flower on top of a colourful bigger flower. Both flowers react to the amplitudue of the music. The flower visual reoccurs at a later stage within the sphere visual and there are some dots that are also rotating within the sphere area.
+
+Other visuals contained in the program include:
+- Colourful square rotating in opposite directions
+- Several colourful circles rotating in a circular formation and reacting to the amplitude of the music
+
 ## Instructions
-- Fork this repository and use it a starter project for your assignment
-- Create a new package named your student number and put all your code in this package.
-- You should start by creating a subclass of ie.tudublin.Visual
-- There is an example visualiser called MyVisual in the example package
-- Check out the WaveForm and AudioBandsVisual for examples of how to call the Processing functions from other classes that are not subclasses of PApplet
+- Press the spacebar to play song when there is no audio playing
+- Press the spacebar to pause song when there is audio playing
+- Press the left arrow key to rewind song
+- Press keys 0 - 5 to view different visuals
+- Key 0: Expanding Circles Visual
+- Key 1: Flower visual
+- Key 2: Rotating Squares visual
+- Key 3: Expanding Circles with Dots visual
+- Key 4: Flower and Dots inside Sphere visual
+- Key 5: More Circles visual
 
-# Description of the assignment
-
-# Instructions
-
-# How it works
-
-# What I am most proud of in the assignment
-
-# Markdown Tutorial
-
-This is *emphasis*
-
-This is a bulleted list
-
-- Item
-- Item
-
-This is a numbered list
-
-1. Item
-1. Item
-
-This is a [hyperlink](http://bryanduggan.org)
-
-# Headings
-## Headings
-#### Headings
-##### Headings
-
-This is code:
-
+## How it works
+I created 7 classes for my different visuals. An instance of each class was created in the SineadsVisual class. I used inheritance to make SineadsVisual extend to the Visual class.
 ```Java
-public void render()
-{
-	ui.noFill();
-	ui.stroke(255);
-	ui.rect(x, y, width, height);
-	ui.textAlign(PApplet.CENTER, PApplet.CENTER);
-	ui.text(text, x + width * 0.5f, y + height * 0.5f);
+public class SineadsVisual extends Visual {
+    RotatingSquares rsq;
+    ExpandingCircles exc;
+    Flower flo;
+    MoreCircles moc;
+    Dots dot;
+    Sphere sph;
+	
+	...
 }
 ```
 
-So is this without specifying the language:
+There is an instance of SineadsVisual in every visual class. This instance is used as a parameter in each visual class constructor. Below is an example of the SineadsVisual instance and the constructor in the ExpandingCircles class. Each visual class is written in a similar format.
+```Java
+public class ExpandingCircles {
+	SineadsVisual sv;
 
-```
-public void render()
-{
-	ui.noFill();
-	ui.stroke(255);
-	ui.rect(x, y, width, height);
-	ui.textAlign(PApplet.CENTER, PApplet.CENTER);
-	ui.text(text, x + width * 0.5f, y + height * 0.5f);
+	public ExpandingCircles(SineadsVisual sv) {
+	this.sv = sv;
+	}
+	
+	...
 }
 ```
 
-This is an image using a relative URL:
+The setup method in the SineadsVisual class loads the audio file and creates objects for each visual class. It also sets the colour mode for all the classes.
+```Java
+public void setup() {
+	startMinim();
 
-![An image](images/p8.png)
+	loadAudio("Wait_a_Minute!.mp3");
 
-This is an image using an absolute URL:
+	rsq = new RotatingSquares(this);
+	exc = new ExpandingCircles(this);
+	flo = new Flower(this);
+	moc = new MoreCircles(this);
+	dot = new Dots(this);
+	sph = new Sphere(this);
 
-![A different image](https://bryanduggandotorg.files.wordpress.com/2019/02/infinite-forms-00045.png?w=595&h=&zoom=2)
+	colorMode(HSB);
+}
+```
 
-This is a youtube video:
+The keyPressed method will check which key the user pressed. This method performs a specific action when a user presses the spacebar key, the left arrow key or any number key between 0 and 5 inclusive.
+```Java
+public void keyPressed() {
+	if (keyCode == ' ')
+	{
+		if (getAudioPlayer().isPlaying()) {
+			getAudioPlayer().pause();
+		}
+		else {
+			getAudioPlayer().play();
+		}
+	}
 
-[![YouTube](http://img.youtube.com/vi/J2kHSSFA4NU/0.jpg)](https://www.youtube.com/watch?v=J2kHSSFA4NU)
+	if(keyCode == LEFT) {
+		// Rewind song
+		getAudioPlayer().cue(0);
+	}
 
-This is a table:
+	if (keyCode >= '0' && keyCode <= '5') {
+		visual = keyCode - '0';
+	}
+}
+```
 
-| Heading 1 | Heading 2 |
-|-----------|-----------|
-|Some stuff | Some more stuff in this column |
-|Some stuff | Some more stuff in this column |
-|Some stuff | Some more stuff in this column |
-|Some stuff | Some more stuff in this column |
+I implemented switch case statements in the draw method so the program could switch between each visual. I decided to call a few visual classes together to make the visual more interesting.
+```Java
+public void draw() {
+	...
 
+	switch (visual) {
+		case 0:
+		{
+			exc.render();
+			break;
+		}
+		case 1:
+		{
+			flo.render();
+			break;
+		}
+		case 2:
+		{
+			// Rotates right
+			camera(0, -500, 500, 0, 0, 0, 500, 0, 0);
+			rsq.render();
+			// Rotates left
+			camera(0, -500, 500, 0, 0, 0, -500, 0, 0);
+			rsq.render();
+			break;
+		}
+		case 3:
+		{                
+			strokeWeight(4);
+			dot.render();
+			strokeWeight(10);
+			dot.render();
+			strokeWeight(20);
+			dot.render();
+			exc.render();
+			break;
+		}
+		case 4:
+		{
+			sph.render();
+			strokeWeight(10);
+			dot.render();
+			flo.render();
+			break;
+		}
+		case 5:
+		{                
+			moc.render();
+			break;
+		}
+	}
+}
+```
+
+## What I am most proud of in the assignment
+What I am most proud of in my assignment is implementing the multi-sized Dots with the ExpandingCircles visual.
+
+I accidentally stumbled across the first version of the dots visual during the process of making the Flower visual. I drew the flower using the `points()` function in a for loop. By messing around with the incremented value at the end of the for loop, I ended up seeing many points rotating within a circular area. At first I felt that there were not as many points as I would like, so I tried to call the Dots class more than once, however the visual looked the same. Then I had the idea to attempt implementing a diffrent stroke weight every time I called the Dots class. I liked the visual a lot more but I felt like there was something missing. So I decided to combine it with the ExpandingCircles visual and I loved how it turned out.
+
+I am also very proud of my MoreCircles visual. I originally wanted to make a kaleidoscope inspired visual. I played around with the positioning of several circles. I then placed these circles into a for loop. The visual looks crazy but I like it that way because I feel that it fits the vibe of the song.
+
+## Images
+Key 0: Expanding Circles
+
+![An image](images/Expanding_Circles.jpg)
+
+Key 1: Flower
+
+![An image](images/Flower.jpg)
+
+Key 2: Rotating Squares
+
+![An image](images/Rotating_Squares.jpg)
+
+Key 3: Expanding Circles with Dots
+
+![An image](images/ExpandingCircles_Dots.jpg)
+
+Key 4: Flower with Dots inside of Sphere
+
+![An image](images/Flower_Sphere_Dots.jpg)
+
+Key 5: More Circles
+
+![An image](images/MoreCircles_Dots.jpg)
+
+## Visuals Video
+
+Youtube: [Music Visuals - OOP Java Processing | Sinead Manuel](https://www.youtube.com/watch?v=nj5XM3YQusE)
