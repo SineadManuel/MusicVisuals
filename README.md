@@ -47,13 +47,13 @@ public class SineadsVisual extends Visual {
 There is an instance of SineadsVisual in every visual class. This instance is used as a parameter in each visual class constructor. Below is an example of the SineadsVisual instance and the constructor in the ExpandingCircles class. Each visual class is written in a similar format.
 ```Java
 public class ExpandingCircles {
-	SineadsVisual sv;
+    SineadsVisual sv;
 
-	public ExpandingCircles(SineadsVisual sv) {
-	this.sv = sv;
-	}
+    public ExpandingCircles(SineadsVisual sv) {
+    this.sv = sv;
+    }
 	
-	...
+    ...
 }
 ```
 
