@@ -99,7 +99,7 @@ public void keyPressed() {
 }
 ```
 
-I implemented switch case statements in the draw method so the program could switch between each visual. Although there are 7 seperate visual classes, there are only 6 key options to view each visual. There are less options because I decided to combine a few visuals together.
+I implemented switch case statements in the draw method so the program could switch between each visual. I decided to call a few visual classes together to make the visual more interesting.
 ```Java
 public void draw() {
 	...
