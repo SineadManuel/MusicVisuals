@@ -40,7 +40,7 @@ public class SineadsVisual extends Visual {
     Dots dot;
     Sphere sph;
 	
-	...
+    ...
 }
 ```
 
