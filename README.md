@@ -39,111 +39,118 @@ public class SineadsVisual extends Visual {
     MoreCircles moc;
     Dots dot;
     Sphere sph;
+	
+	...
+}
 ```
 
 There is an instance of SineadsVisual in every visual class. This instance is used as a parameter in each visual class constructor. Below is an example of the SineadsVisual instance and the constructor in the ExpandingCircles class. Each visual class is written in a similar format.
 ```Java
 public class ExpandingCircles {
-    SineadsVisual sv;
+	SineadsVisual sv;
 
-        public ExpandingCircles(SineadsVisual sv) {
-	    this.sv = sv;
-        }
+	public ExpandingCircles(SineadsVisual sv) {
+	this.sv = sv;
+	}
+	
+	...
+}
 ```
 
-The setup method in the SineadsVisual class loads the audio file and creates objects for each visual class.
+The setup method in the SineadsVisual class loads the audio file and creates objects for each visual class. It also sets the colour mode for all the classes.
 ```Java
-public void setup()
-    {
-        startMinim();
-	
-        loadAudio("Wait_a_Minute!.mp3");
+public void setup() {
+	startMinim();
 
-        rsq = new RotatingSquares(this);
-        exc = new ExpandingCircles(this);
-        flo = new Flower(this);
-        moc = new MoreCircles(this);
-        dot = new Dots(this);
-        sph = new Sphere(this);
+	loadAudio("Wait_a_Minute!.mp3");
 
-        colorMode(HSB);
-    }
+	rsq = new RotatingSquares(this);
+	exc = new ExpandingCircles(this);
+	flo = new Flower(this);
+	moc = new MoreCircles(this);
+	dot = new Dots(this);
+	sph = new Sphere(this);
+
+	colorMode(HSB);
+}
 ```
 
 The keyPressed method will check which key the user pressed. This method performs a specific action when a user presses the spacebar key, the left arrow key or any number key between 0 and 5 inclusive.
 ```Java
-public void keyPressed()
-    {
-        if (keyCode == ' ')
-        {
-            if (getAudioPlayer().isPlaying()) {
-                getAudioPlayer().pause();
-            }
-            else {
-                getAudioPlayer().play();
-            }
-        }
+public void keyPressed() {
+	if (keyCode == ' ')
+	{
+		if (getAudioPlayer().isPlaying()) {
+			getAudioPlayer().pause();
+		}
+		else {
+			getAudioPlayer().play();
+		}
+	}
 
-        if(keyCode == LEFT) {
-            // Rewind song
-            getAudioPlayer().cue(0);
-        }
+	if(keyCode == LEFT) {
+		// Rewind song
+		getAudioPlayer().cue(0);
+	}
 
-        if (keyCode >= '0' && keyCode <= '5') {
-            visual = keyCode - '0';
-        }
-    }
+	if (keyCode >= '0' && keyCode <= '5') {
+		visual = keyCode - '0';
+	}
+}
 ```
 
-I implemented switch case statements in the draw function so the program could switch between each visual. Although there are 7 seperate visual classes, there are only 6 key options to view each visual. There are less options because I decided to combine a few visuals together.
+I implemented switch case statements in the draw method so the program could switch between each visual. Although there are 7 seperate visual classes, there are only 6 key options to view each visual. There are less options because I decided to combine a few visuals together.
 ```Java
-switch (visual)
-        {
-            case 0:
-            {
-                exc.render();
-                break;
-            }
-            case 1:
-            {
-                flo.render();
-                break;
-            }
-            case 2:
-            {
-                // Rotates right
-                camera(0, -500, 500, 0, 0, 0, 500, 0, 0);
-                rsq.render();
-                // Rotates left
-                camera(0, -500, 500, 0, 0, 0, -500, 0, 0);
-                rsq.render();
-                break;
-            }
-            case 3:
-            {                
-                strokeWeight(4);
-                dot.render();
-                strokeWeight(10);
-                dot.render();
-                strokeWeight(20);
-                dot.render();
-                exc.render();
-                break;
-            }
-            case 4:
-            {
-                sph.render();
-                strokeWeight(10);
-                dot.render();
-                flo.render();
-                break;
-            }
-            case 5:
-            {                
-                moc.render();
-                break;
-            }
-        }
+public void draw() {
+	...
+
+	switch (visual) {
+		case 0:
+		{
+			exc.render();
+			break;
+		}
+		case 1:
+		{
+			flo.render();
+			break;
+		}
+		case 2:
+		{
+			// Rotates right
+			camera(0, -500, 500, 0, 0, 0, 500, 0, 0);
+			rsq.render();
+			// Rotates left
+			camera(0, -500, 500, 0, 0, 0, -500, 0, 0);
+			rsq.render();
+			break;
+		}
+		case 3:
+		{                
+			strokeWeight(4);
+			dot.render();
+			strokeWeight(10);
+			dot.render();
+			strokeWeight(20);
+			dot.render();
+			exc.render();
+			break;
+		}
+		case 4:
+		{
+			sph.render();
+			strokeWeight(10);
+			dot.render();
+			flo.render();
+			break;
+		}
+		case 5:
+		{                
+			moc.render();
+			break;
+		}
+	}
+}
 ```
 
 ## What I am most proud of in the assignment
