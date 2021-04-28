@@ -16,9 +16,7 @@ public class Dots {
 
         sv.rotate(PApplet.radians(rot));
         for(float i = 0; i < PApplet.TWO_PI; i += 0.1f) {
-
             float colour = PApplet.map(i, 0, PApplet.TWO_PI, 0, 255);
-            
             sv.stroke(colour, 255, 255);
             
             float r = 50 * PApplet.cos(4 * i);

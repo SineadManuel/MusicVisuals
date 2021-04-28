@@ -24,7 +24,6 @@ public class MoreCircles {
         {
             float colour = PApplet.map(i, 0, bands.length, 0, 255);
             sv.stroke(colour, 255, 255);
-
             float size = bands[i];
 
             sv.ellipseMode(PApplet.CENTER);

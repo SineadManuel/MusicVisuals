@@ -3,7 +3,6 @@ package C19336081;
 import ie.tudublin.*;
 
 public class SineadsVisual extends Visual {
-    // Make files with shapes and add them below;
     RotatingSquares rsq;
     ExpandingCircles exc;
     Flower flo;
@@ -27,7 +26,6 @@ public class SineadsVisual extends Visual {
     {
         startMinim();
                 
-        // Call loadAudio to load an audio file to process 
         loadAudio("Wait_a_Minute!.mp3");
 
         rsq = new RotatingSquares(this);
@@ -128,10 +126,8 @@ public class SineadsVisual extends Visual {
             case 4:
             {
                 sph.render();
-
                 strokeWeight(10);
                 dot.render();
-
                 flo.render();
                 break;
             }
