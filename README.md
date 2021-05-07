@@ -165,7 +165,7 @@ Key 0: Expanding Circles
 
 ![An image](images/Expanding_Circles.jpg)
 
-Key 1: Flower
+Key 1: Flower - Some lines of code was inspired by The Coding Train. Source: https://www.youtube.com/watch?v=f5QBExMNB1I
 
 ![An image](images/Flower.jpg)
 
